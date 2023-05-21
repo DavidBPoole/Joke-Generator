@@ -3,21 +3,25 @@ import '../styles/main.scss';
 import getRequest from '../api/promises';
 import renderToDom from '../utils/renderFunction';
 
-const joke = getRequest();
-console.warn(joke);
+// const joke = getRequest();
+// console.warn(joke);
+
+const joke = [];
 
 const renderHtmlStructure = () => {
   const domString = `
   <h1 id="jokeTitle">Joke Generator</h1>
   <div id="jokeContainer"></div>
-  <div id="jokeBtnContainer"></div>
+  <div id="jokeBtnContainer">
+    <button "type="button" id="getJoke" class="btn btn-dark">Get Joke</button>
+  </div>
   `;
   renderToDom('#app', domString);
 };
 
 const renderJoke = () => {
   const domString = `
-  <button "type="button" id="getJoke1" class="btn btn-dark">Get Joke</button>`;
+  <button "type="button" id="getJoke" class="btn btn-dark">Get Joke</button>`;
   renderToDom('#jokeBtnContainer', domString);
 };
 
@@ -33,42 +37,77 @@ const returnNewJoke = () => {
   renderToDom('#jokeBtnContainer', domString);
 };
 
-const fetchJoke = () => {
-  getRequest().then((item) => {
-    renderToDom('#jokeContainer', item.setup);
-  });
+const renderJokeText = (Obj) => {
+  // console.warn(Obj);
+  joke.push(Obj);
+  const domString = `
+  <h2>${Obj.setup}</h2>`;
+  renderToDom('#jokeContainer', domString);
+  punchline();
 };
 
-const getJokeEvent = () => {
-  document.querySelector('#getJoke1').addEventListener('click', () => {
-    getRequest().then(console.warn);
-  });
+const renderPunchline = () => {
+  const domString = `
+  <h2>${joke[0].delivery}</h2>`;
+  renderToDom('#jokeContainer', domString);
+  joke.length = 0;
+  returnNewJoke();
 };
 
-const getPunchlinEvent = () => {
-  document.querySelector('#getJoke2').addEventListener('click', () => {
-    getRequest().then(console.warn);
-  });
-};
+// const fetchJoke = () => {
+//   getRequest().then((item) => {
+//     renderToDom('#jokeContainer', item.setup);
+//   });
+// };
+// fetchJoke();
 
-const getNewJoke = () => {
-  document.querySelector('#getJoke3').addEventListener('click', () => {
-    getRequest().then(console.warn);
-  });
-};
+// const getJokeEvent = () => {
+//   document.querySelector('#getJoke').addEventListener('click', () => {
+//     getJokeEvent.innerHTML = 'Button clicked';
+//   });
+// };
+
+// const getPunchlinEvent = () => {
+//   document.querySelector('#getJoke2').addEventListener('click', () => {
+//     getRequest().then(console.warn);
+//   });
+// };
+
+// const getNewJoke = () => {
+//   document.querySelector('#getJoke3').addEventListener('click', () => {
+//     getRequest().then(console.warn);
+//   });
+// };
 
 const init = () => {
   renderHtmlStructure();
-  getRequest();
   renderJoke();
-  fetchJoke();
-  punchline();
-  returnNewJoke();
-  getJokeEvent();
-  getPunchlinEvent();
-  getNewJoke();
+  // getRequest();
+  // fetchJoke();
+  // punchline();
+  // returnNewJoke();
+  // getJokeEvent();
+  // getPunchlinEvent();
+  // getNewJoke();
 };
 init();
+
+document.querySelector('#jokeBtnContainer').addEventListener('click', (e) => {
+  e.preventDefault();
+  switch (e.target.id) {
+    case 'getJoke':
+      getRequest().then((value) => renderJokeText(value));
+      break;
+    case 'getJoke2':
+      renderPunchline();
+      break;
+    case 'getJoke3':
+      getRequest().then((value) => renderJokeText(value));
+      break;
+    default:
+      break;
+  }
+});
 
 // TEST AREA BELOW ONLY ***************
 
