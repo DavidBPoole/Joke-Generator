@@ -24,7 +24,7 @@ const renderHtmlStructure = () => {
 // Render for first button:
 const renderJoke = () => {
   const domString = `
-  <button "type="button" id="getJoke" class="btn btn-dark">Get Joke</button>`;
+  <button "type="button" id="getJoke1" class="btn btn-dark">Get Joke</button>`;
   renderToDom('#jokeBtnContainer', domString);
 };
 
@@ -42,17 +42,18 @@ const returnNewJoke = () => {
   renderToDom('#jokeBtnContainer', domString);
 };
 
-// Function to render joke setup (1st part of joke) and to also push the JSON object with the new joke upon the third button case based on the switch case events within the event lsiteners.
+// Function to render joke setup (1st part of joke) and to also push the JSON object (Obj) with the new joke upon the third button case based on the switch case events within the event listeners.
 const renderJokeText = (Obj) => {
   // console.warn(Obj);
   joke.push(Obj);
   const domString = `
   <h2>${Obj.setup}</h2>`;
   renderToDom('#jokeContainer', domString);
+  // Punchline is immediately called following the above because we want it to render and display immediately following the setup from the joke Obj.
   punchline();
 };
 
-// Function to render the joke delivery and the 2nd button text before returning to the 1st button for a new joke.
+// Function to render the joke delivery and the 2nd button text before returning to the 1st button for a new joke and the subsequent new joke Obj which is pushed as an argument from the empty "joke" array. ${joke[0].delivery} is dropped in the h2 slot to reference the index of the array as 0 preventing an accumulation of jokes resetting back to the first index of the array.
 const renderPunchline = () => {
   const domString = `
   <h2>${joke[0].delivery}</h2>`;
@@ -66,7 +67,7 @@ const events = () => {
   document.querySelector('#jokeBtnContainer').addEventListener('click', (e) => {
     e.preventDefault();
     switch (e.target.id) {
-      case 'getJoke':
+      case 'getJoke1':
         getRequest().then((value) => renderJokeText(value));
         break;
       case 'getJoke2':
