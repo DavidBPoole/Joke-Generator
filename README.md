@@ -1,3 +1,4 @@
+Joke Generator - [![Netlify Status](https://api.netlify.com/api/v1/badges/5f29eda8-31bc-45ac-9310-f7f7c83aa4d8/deploy-status)](https://app.netlify.com/sites/davidpoole-joke-generator/deploys)
 # Webpack Intro
 
 [See Live Demo of this Template](https://webpack-5-template.netlify.app)
